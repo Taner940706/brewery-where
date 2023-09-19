@@ -17,8 +17,13 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path, include
 
+from brewery_where.main.views import View404, View500
+
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', include('brewery_where.main.urls'),
          )
 ]
+
+handler404 = View404.as_view()
+handler500 = View500.as_view()
