@@ -17,11 +17,26 @@ class HomeView(views.TemplateView):
 
         brewery_name = str(self.request.GET.get('brewery_name'))
 
-        source_breweries = urllib.request.urlopen('https://api.openbrewerydb.org/v1/breweries').read()
-        searched_brewery = urllib.request.urlopen('https://api.openbrewerydb.org/v1/breweries/search?query=' + (brewery_name.replace(" ", "%20"))).read()
+        source_breweries = None
+        searched_brewery = None
+        data_breweries = None
+        data_searched_brewery = None
 
-        data_breweries = json.loads(source_breweries)
-        data_searched_brewery = json.loads(searched_brewery)
+        try:
+            source_breweries = urllib.request.urlopen('https://api.openbrewerydb.org/v1/breweries').read()
+            data_breweries = json.loads(source_breweries)
+        except urllib.error.HTTPError as err:
+            pass
+        except KeyError as k:
+            pass
+
+        try:
+            searched_brewery = urllib.request.urlopen('https://api.openbrewerydb.org/v1/breweries/search?query=' + (brewery_name.replace(" ", "%20"))).read()
+            data_searched_brewery = json.loads(searched_brewery)
+        except urllib.error.HTTPError as err:
+            pass
+        except KeyError as k:
+            pass
 
         context['breweries'] = data_breweries
         context['searched_brewery'] = data_searched_brewery
