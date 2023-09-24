@@ -6,7 +6,8 @@
 <input  type="text" class="brewery_name" placeholder="Type a brewery name"/>
 <button type="submit" class="btn btn-primary">Enter</button>
 </div>
-
+    {% if breweries %}
+    {% for brewery in breweries %}
     <div class="col-md-4">
                             <div class="card-body">
                                 <h5 class="card-title">Name:</h5>
@@ -16,8 +17,11 @@
                                 <button type="submit" class="btn btn-success">Show more</button>
                             </div>
     </div>
+    {% endfor %}
+    <p>{{ breweries }}</p>
+    {% else %}
     <div class="col-md-4">
         <p class="error-text">The brewery doesn't found!</p>
     </div>
-
+{% endif %}
 {% endblock %}

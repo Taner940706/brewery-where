@@ -1,7 +1,4 @@
 import json
-import urllib
-
-from django.shortcuts import render
 from django.views import generic as views
 import urllib.request
 import urllib.error
@@ -38,7 +35,8 @@ class HomeView(views.TemplateView):
         except KeyError as k:
             pass
 
-        context['breweries'] = data_breweries
+        if data_breweries is not None:
+            context['breweries'] = data_breweries
         context['searched_brewery'] = data_searched_brewery
 
         return context
