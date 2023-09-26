@@ -10,15 +10,14 @@
     {% for brewery in breweries %}
     <div class="col-md-4">
                             <div class="card-body">
-                                <h5 class="card-title">Name:</h5>
-                                <p class="card-text">Type:</p>
-                                <p class="card-text">City</p>
-                                <p class="card-text">Country: </p>
+                                <h5 class="card-title">Name: {{ brewery.name }}</h5>
+                                <p class="card-text">Type: {{ brewery.brewery_type }}</p>
+                                <p class="card-text">City: {{ brewery.city }}</p>
+                                <p class="card-text">Country: {{ brewery.country }}</p>
                                 <button type="submit" class="btn btn-success">Show more</button>
                             </div>
     </div>
     {% endfor %}
-    <p>{{ breweries }}</p>
     {% else %}
     <div class="col-md-4">
         <p class="error-text">The brewery doesn't found!</p>

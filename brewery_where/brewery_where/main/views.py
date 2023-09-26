@@ -14,30 +14,36 @@ class HomeView(views.TemplateView):
 
         brewery_name = str(self.request.GET.get('brewery_name'))
 
-        source_breweries = None
-        searched_brewery = None
-        data_breweries = None
-        data_searched_brewery = None
+        # # source_breweries = None
+        # searched_brewery = None
+        # data_breweries = None
+        # data_searched_brewery = None
 
-        try:
-            source_breweries = urllib.request.urlopen('https://api.openbrewerydb.org/v1/breweries').read()
-            data_breweries = json.loads(source_breweries)
-        except urllib.error.HTTPError as err:
-            pass
-        except KeyError as k:
-            pass
+        headers = {'User-Agent': 'PostmanRuntime/7.33.0'}
 
-        try:
-            searched_brewery = urllib.request.urlopen('https://api.openbrewerydb.org/v1/breweries/search?query=' + (brewery_name.replace(" ", "%20"))).read()
-            data_searched_brewery = json.loads(searched_brewery)
-        except urllib.error.HTTPError as err:
-            pass
-        except KeyError as k:
-            pass
+        # try:
+        url = 'https://api.openbrewerydb.org/v1/breweries'
+        request = urllib.request.Request(url, headers=headers)
+        source_breweries = urllib.request.urlopen(request)
+        response_data = source_breweries.read()
+        response_str = response_data.decode('utf-8')
+        data_breweries = json.loads(response_str)
+        # except urllib.error.HTTPError as err:
+        #     pass
+        # except KeyError as k:
+        #     pass
+
+        # try:
+        # searched_brewery = urllib.request.urlopen('https://api.openbrewerydb.org/v1/breweries/search?query=' + (brewery_name.replace(" ", "%20"))).read()
+        # data_searched_brewery = json.loads(searched_brewery)
+        # except urllib.error.HTTPError as err:
+        #     pass
+        # except KeyError as k:
+        #     pass
 
         if data_breweries is not None:
             context['breweries'] = data_breweries
-        context['searched_brewery'] = data_searched_brewery
+        # context['searched_brewery'] = data_searched_brewery
 
         return context
 
