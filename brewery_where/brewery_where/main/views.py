@@ -34,7 +34,7 @@ class HomeView(views.TemplateView):
             pass
 
         try:
-            url = urllib.request.urlopen('https://api.openbrewerydb.org/v1/breweries/search?query=' + (brewery_name.replace(" ", "%20"))).read()
+            url = 'https://api.openbrewerydb.org/v1/breweries/search?query=' + (brewery_name.replace(" ", "%20"))
             request = urllib.request.Request(url, headers=headers)
             source_searched_breweries = urllib.request.urlopen(request)
             response_data = source_searched_breweries.read()
@@ -50,6 +50,8 @@ class HomeView(views.TemplateView):
 
         if data_searched_brewery is not None:
             context['searched_brewery'] = data_searched_brewery
+
+        context['brewery_name'] = brewery_name
 
         return context
 
